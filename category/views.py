@@ -84,4 +84,23 @@ class Class2(APIView):
                 status=HTTPStatus.BAD_REQUEST
             )
     
-    
+    def delete(self, request, id):
+        try:
+            data = Category.objects.get(pk=id)
+            data.delete()
+
+            return JsonResponse(
+                {"status": "ok", "message": "The register was deleted successfully"},
+                status=HTTPStatus.OK
+            )
+
+        except Category.DoesNotExist:
+            return JsonResponse(
+                {"status": "error", "message": "Category not found"},
+                status=HTTPStatus.NOT_FOUND
+            )
+        except Exception as e:
+            return JsonResponse(
+                {"error": "Something went wrong", "details": str(e)},
+                status=HTTPStatus.BAD_REQUEST
+            )
