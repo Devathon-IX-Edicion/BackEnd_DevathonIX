@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from .models import Recipe, RecipeIngredient
-from effects.serializers import EffectSerializer
-from ingredients.serializers import IngredientSerializer
+from effects.serializer import EffectSerializer
+from ingredients.serializer import IngredientSerializer
 
 class RecipeIngredientSerializer(serializers.ModelSerializer):
     ingredient_details = IngredientSerializer(source='ingredient', read_only=True)
