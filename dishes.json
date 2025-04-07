@@ -1,0 +1,103 @@
+[
+    {
+      "model": "magicdish",
+      "fields": {
+        "name": "Magic Pumpkin Pie",
+        "description": "A sweet and fluffy pie made with magical pumpkins.",
+        "ingredients": "Magic pumpkin, flour, sugar, eggs, spices.",
+        "category": "Common",
+        "magic_level": "3"
+      }
+    },
+    {
+      "model": "magicdish",
+      "fields": {
+        "name": "Hufflepuff Cinnamon Cookies",
+        "description": "Crunchy cookies with a touch of magical cinnamon.",
+        "ingredients": "Flour, butter, sugar, magic cinnamon.",
+        "category": "Common",
+        "magic_level": "2"
+      }
+    },
+    {
+      "model": "magicdish",
+      "fields": {
+        "name": "Golden Honey Bread",
+        "description": "Soft bread made with magical bee honey.",
+        "ingredients": "Flour, magical honey, yeast, water.",
+        "category": "Common",
+        "magic_level": "3"
+      }
+    },
+    {
+      "model": "magicdish",
+      "fields": {
+        "name": "Enchanted Vegetable Soup",
+        "description": "A comforting soup with color-changing vegetables.",
+        "ingredients": "Carrots, potatoes, onions, magic broth.",
+        "category": "Common",
+        "magic_level": "4"
+      }
+    },
+    {
+      "model": "magicdish",
+      "fields": {
+        "name": "Mini Dragon Cake",
+        "description": "A cake that looks like a tiny dragon and spits sparks.",
+        "ingredients": "Flour, eggs, sugar, fake dragon scales.",
+        "category": "Rare",
+        "magic_level": "6"
+      }
+    },
+    {
+      "model": "magicdish",
+      "fields": {
+        "name": "Flying Cloud Ice Cream",
+        "description": "Ice cream that floats in the air before being eaten.",
+        "ingredients": "Magical milk, sugar, cloud essence.",
+        "category": "Rare",
+        "magic_level": "5"
+      }
+    },
+    {
+      "model": "magicdish",
+      "fields": {
+        "name": "Mandrake Leaf Tea",
+        "description": "Relaxing tea that whispers when you drink it.",
+        "ingredients": "Mandrake leaves, hot water, honey.",
+        "category": "Rare",
+        "magic_level": "7"
+      }
+    },
+    {
+      "model": "magicdish",
+      "fields": {
+        "name": "Golden Badger Banquet",
+        "description": "A feast that magically appears on the Hufflepuff common table.",
+        "ingredients": "Various (appears magically).",
+        "category": "Epic",
+        "magic_level": "8"
+      }
+    },
+    {
+      "model": "magicdish",
+      "fields": {
+        "name": "Happiness Jelly Potion",
+        "description": "A jelly that makes you feel euphoric when eaten.",
+        "ingredients": "Magical jelly, essence of happiness.",
+        "category": "Epic",
+        "magic_level": "9"
+      }
+    },
+    {
+      "model": "magicdish",
+      "fields": {
+        "name": "Eternal Kindness Cake",
+        "description": "A cake that never ends and always tastes like your favorite flavor.",
+        "ingredients": "Mysterious (only Helga Hufflepuff knew).",
+        "category": "Legendary",
+        "magic_level": "10"
+      }
+    }
+  ]
+  
