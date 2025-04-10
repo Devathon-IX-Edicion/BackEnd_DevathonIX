@@ -39,7 +39,7 @@ class Class2(APIView):
         try:
             data = Categoty.objects.filter(pk=id).get()
             Categoty.objects.filter(pk=id).update(name=request.data.get("name"), slug=slugify(request.data.get("name")))
-            return JsonResponse({"estado":"ok", "message":"Se modifica el registro exitosamente"}, status=HTTPStatus.OK)
+            return JsonResponse({"status":"ok", "message":"Se modifica el registro exitosamente"}, status=HTTPStatus.OK)
         except Categoty.DoesNotExist:
             raise Http404
         
