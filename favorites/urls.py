@@ -7,4 +7,5 @@ router.register(r'favorites', FavoriteRecipeViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
+    path('v1/favorites/', FavoriteRecipeViewSet.as_view({'get': 'list'}), name='favorite-recipes-list'),   
 ]
