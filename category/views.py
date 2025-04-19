@@ -6,101 +6,49 @@ from .serializers import *
 from http import HTTPStatus
 from django.http import Http404
 from django.utils.text import slugify
+from ingredients.models import *
 
 class Class1(APIView):
     def get(self, request):
-        data = Category.objects.order_by('-id').all()
-        json_data = CategorySerializer(data, many=True)
-        return Response(
-            {"data": json_data.data},
-            status=HTTPStatus.OK
-        )
-
+        data = Categoty.objects.order_by('-id').all()
+        datos_json = CategorySerializer(data, many=True)
+        return JsonResponse({"data":datos_json.data}, status=HTTPStatus.OK)
+        
     def post(self, request):
-        if request.data.get("name") is None or not request.data["name"]:
-            return JsonResponse(
-                {"status": "error", "message": "The row field 'name' is obligatory"},
-                status=HTTPStatus.BAD_REQUEST
-            )
+        if request.data.get("name")==None or not request.data['name']:
+            return JsonResponse({"status":"error", "message":"El campo nombre es obligatorio"}, status=HTTPStatus.BAD_REQUEST)
         try:
-            Category.objects.create(name=request.data["name"])
-
-            return JsonResponse(
-                {"status": "ok", "message": "The register was created successfully"},
-                status=HTTPStatus.CREATED
-            )
+            Categoty.objects.create(name=request.data['name'])
+            return JsonResponse({"status":"ok", "message":"Se crea el registro exitosamente"}, status=HTTPStatus.CREATED)
         except Exception as e:
-            return JsonResponse(
-                {"status": "Something went wrong", "details": str(e)},
-                status=HTTPStatus.BAD_REQUEST
-            )
+            raise Http404
 
 class Class2(APIView):
     def get(self, request, id):
         try:
-            data = Category.objects.get(id=id) 
-            return JsonResponse(
-                {
-                    "data": {
-                        "id": data.id,
-                        "name": data.name,
-                        "slug": data.slug
-                    }
-                },
-                status=HTTPStatus.OK
-            )
-        except Category.DoesNotExist:
-            return JsonResponse(
-                {"status": "error", "message": "Category not found"},
-                status=HTTPStatus.NOT_FOUND
-            )
-
-    def put(self, request, id):
-        if not request.data.get("name"):
-            return JsonResponse(
-                {"status": "error", "message": "The field 'name' is obligatory"},
-                status=HTTPStatus.BAD_REQUEST
-            )
-
-        try:
-            data = Category.objects.get(pk=id)
-            data.name = request.data.get("name")
-            data.slug = slugify(request.data.get("name"))
-            data.save()
-
-            return JsonResponse(
-                {"status": "ok", "message": "The register was updated successfully"},
-                status=HTTPStatus.OK
-            )
-
-        except Category.DoesNotExist:
-            return JsonResponse(
-                {"status": "error", "message": "Category not found"},
-                status=HTTPStatus.NOT_FOUND
-            )
-        except Exception as e:
-            return JsonResponse(
-                {"error": "Something went wrong", "details": str(e)},
-                status=HTTPStatus.BAD_REQUEST
-            )
+            data = Categoty.objects.filter(id=id).get()
+            return JsonResponse({"data": {"id":data.id, "name":data.name, "slug":data.slug}}, status=HTTPStatus.OK)
+        except Categoty.DoesNotExist:
+            raise Http404
     
+    def put(self, request, id):
+        if request.data.get("name")==None:
+            return JsonResponse({"status":"error", "message":"El campo name es obligatorio"}, status=HTTPStatus.BAD_REQUEST)
+        if not request.data.get("name"):
+            return JsonResponse({"status":"error", "message":"El campo name es obligatorio"}, status=HTTPStatus.BAD_REQUEST)
+        try:
+            data = Categoty.objects.filter(pk=id).get()
+            Categoty.objects.filter(pk=id).update(name=request.data.get("name"), slug=slugify(request.data.get("name")))
+            return JsonResponse({"status":"ok", "message":"Se modifica el registro exitosamente"}, status=HTTPStatus.OK)
+        except Categoty.DoesNotExist:
+            raise Http404
+        
     def delete(self, request, id):
         try:
-            data = Category.objects.get(pk=id)
-            data.delete()
-
-            return JsonResponse(
-                {"status": "ok", "message": "The register was deleted successfully"},
-                status=HTTPStatus.OK
-            )
-
-        except Category.DoesNotExist:
-            return JsonResponse(
-                {"status": "error", "message": "Category not found"},
-                status=HTTPStatus.NOT_FOUND
-            )
-        except Exception as e:
-            return JsonResponse(
-                {"error": "Something went wrong", "details": str(e)},
-                status=HTTPStatus.BAD_REQUEST
-            )
+            data = Categoty.objects.filter(pk=id).get()
+        except Categoty.DoesNotExist:
+            raise Http404
+        if Ingredient.objects.filter(categoria_id=id).exists():
+            return JsonResponse({"status":"error", "message":"Ocurrió un error inesperado"}, status=HTTPStatus.BAD_REQUEST)
+        Categoty.objects.filter(pk=id).delete()
+        return JsonResponse({"status":"ok", "message":"Se elimina el registro exitosamente"}, status=HTTPStatus.OK)
