@@ -29,8 +29,8 @@ Este proyecto está construido con **Django REST Framework**, una potente herram
 ### 1. Clonar el Repositorio
 
 ```bash
-git clone https://github.com/hufflepuff-team/magical-potions-backend.git
-cd magical-potions-backend
+git clone https://github.com/Devathon-IX-Edicion/BackEnd_DevathonIX.git
+cd BackEnd_DevathonIX
 ```
 
 ### 2. Crear y Activar un Entorno Virtual
