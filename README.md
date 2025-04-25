@@ -61,18 +61,9 @@ Una vez activado, deberías ver `(venv)` al inicio de tu línea de comandos.
 pip install django djangorestframework django-cors-headers
 ```
 
-### 4. Configurar el Proyecto
-
-```bash
-django-admin startproject hufflepuff_potions .
-cd hufflepuff_potions
-django-admin startapp potions_api
-cd ..
-```
-
 No olvides añadir 'rest_framework', 'corsheaders' y 'hufflepuff_potions.potions_api' a INSTALLED_APPS en settings.py.
 
-### 5. Configurar la Base de Datos
+### 4. Configurar la Base de Datos
 
 Para el MVP, utilizaremos SQLite que viene integrado con Django:
 
@@ -86,7 +77,7 @@ DATABASES = {
 }
 ```
 
-### 6. Crear Modelos
+### 5. Crear Modelos
 
 Implementa los modelos en `potions_api/models.py` según el esquema DBML que definimos:
 - Category
@@ -98,14 +89,14 @@ Implementa los modelos en `potions_api/models.py` según el esquema DBML que def
 - AttemptIngredient
 - FavoriteRecipe
 
-### 7. Realizar Migraciones
+### 6. Realizar Migraciones
 
 ```bash
 python manage.py makemigrations
 python manage.py migrate
 ```
 
-### 8. Estructura de la API
+### 7. Estructura de la API
 
 Nuestra API sigue una arquitectura RESTful utilizando los componentes de Django REST Framework:
 
@@ -113,7 +104,7 @@ Nuestra API sigue una arquitectura RESTful utilizando los componentes de Django 
 - **ViewSets**: Manejan las operaciones CRUD para cada modelo
 - **Routers**: Configuran automáticamente las URLs para los endpoints
 
-### 9. Endpoints Principales
+### 8. Endpoints Principales
 
 ```
 /api/categories/     # Categorías de ingredientes
@@ -124,7 +115,7 @@ Nuestra API sigue una arquitectura RESTful utilizando los componentes de Django 
 /api/favorites/      # Recetas favoritas
 ```
 
-### 10. Iniciar el Servidor
+### 9. Iniciar el Servidor
 
 ```bash
 python manage.py runserver
