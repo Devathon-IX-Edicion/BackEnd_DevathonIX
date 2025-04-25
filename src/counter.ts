@@ -1,44 +1,32 @@
-import { DurableObject } from 'cloudflare:workers';
+export class CounterDO {
+  state: DurableObjectState;
+  count: number = 0;
 
-export type Env = {
-  Bindings: {
-    MY_DURABLE_OBJECT: DurableObjectNamespace<MyDurableObject>;
-  };
-  Variables: {
-    stub: DurableObjectStub<MyDurableObject>;
-  };
-};
+  constructor(state: DurableObjectState) {
+    this.state = state;
+    this.state.blockConcurrencyWhile(async () => {
+      const stored = await this.state.storage.get<number>('count');
+      this.count = stored || 0;
+    });
+  }
 
-export class MyDurableObject extends DurableObject {
-  ctx: DurableObjectState;
-  env: Env;
-  constructor(ctx: DurableObjectState, env: Env) {
-    super(ctx, env);
-    this.ctx = ctx;
-    this.env = env;
+  async fetch(request: Request): Promise<Response> {
+    const { pathname } = new URL(request.url);
 
-    this.ctx.storage.sql.exec(`
-            CREATE TABLE IF NOT EXISTS apple (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                greeting TEXT NOT NULL
-            )
-        `);
-
-    const count = this.ctx.storage.sql.exec('SELECT COUNT(*) as count FROM apple').one().count;
-    if (count === 0) {
-      this.ctx.storage.sql.exec("INSERT INTO apple (greeting) VALUES ('Hello, World!')");
+    if (pathname === '/increment') {
+      this.count++;
+      await this.state.storage.put('count', this.count);
+      return new Response(JSON.stringify({ count: this.count }), {
+        headers: { 'Content-Type': 'application/json' },
+      });
     }
-  }
 
-  async sayHello() {
-    const result = this.ctx.storage.sql
-      .exec('SELECT greeting FROM apple ORDER BY id DESC LIMIT 1')
-      .one();
-    return result?.greeting ?? 'Hello, World!';
-  }
+    if (pathname === '/current') {
+      return new Response(JSON.stringify({ count: this.count }), {
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
 
-  async setText(text: string) {
-    this.ctx.storage.sql.exec('INSERT INTO apple (greeting) VALUES (?)', [text]);
-    return text;
+    return new Response('Not Found', { status: 404 });
   }
 }

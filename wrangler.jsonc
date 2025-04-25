@@ -36,7 +36,14 @@
   //   "head_sampling_rate": 1
   // },
   "durable_objects": {
-    "bindings": [{ "name": "MY_DURABLE_OBJECT", "class_name": "MyDurableObject" }]
+    "bindings": [
+      { "name": "REALTIME_CURSORS", "class_name": "MyDurableObject" },
+    ],
   },
-  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["MyDurableObject"] }],
+  "migrations": [
+    {
+      "tag": "v1",
+      "new_sqlite_classes": ["MyDurableObject"],
+    },
+  ],
 }
