@@ -1,0 +1,17 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "worker-luis-code",
+  "main": "src/index.ts",
+  "compatibility_date": "2025-04-15",
+  "durable_objects": {
+    "bindings": [
+      { "name": "DEVATHON", "class_name": "modelDB" },
+    ],
+  },
+  "migrations": [
+    {
+      "tag": "v1",
+      "new_sqlite_classes": ["modelDB"],
+    },
+  ],
+}
