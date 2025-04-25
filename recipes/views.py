@@ -1,6 +1,7 @@
 from rest_framework import viewsets, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from django.db.models import Count, Q
 from .models import Recipe, RecipeIngredient
 from .serializers import RecipeSerializer, RecipeIngredientSerializer
 
@@ -26,6 +27,34 @@ class RecipeViewSet(viewsets.ModelViewSet):
         recipe = self.get_object()
         ingredients = RecipeIngredient.objects.filter(recipe=recipe)
         serializer = RecipeIngredientSerializer(ingredients, many=True)
+        return Response(serializer.data)
+    
+    @action(detail=False, methods=['post'])
+    def find_by_ingredients(self, request):
+        ingredient_ids = request.data.get('ingredients', [])
+        
+        if not ingredient_ids:
+            return Response(
+                {"error": "Please provide ingredient IDs"}, 
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        
+        # Método 1: Usando el nuevo campo ingredient_ids
+        recipes = Recipe.objects.filter(ingredient_ids__contains=ingredient_ids)
+        
+        # Método 2: Usando consultas más complejas (alternativa si no usas ArrayField)
+        # Encuentra recetas que contienen TODOS los ingredientes especificados
+        recipes_alt = Recipe.objects.filter(
+            recipe_ingredients__ingredient_id__in=ingredient_ids
+        ).annotate(
+            matching_count=Count('recipe_ingredients', 
+                             filter=Q(recipe_ingredients__ingredient_id__in=ingredient_ids))
+        ).filter(
+            matching_count=len(ingredient_ids)
+        ).distinct()
+        
+        # Usa la consulta más adecuada según tu implementación
+        serializer = self.get_serializer(recipes, many=True)
         return Response(serializer.data)
 
 class RecipeIngredientViewSet(viewsets.ModelViewSet):
