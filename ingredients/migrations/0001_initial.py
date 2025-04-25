@@ -2,6 +2,7 @@
 
 import autoslug.fields
 from django.db import migrations, models
+import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
@@ -9,23 +10,27 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
+        ('category', '0001_initial'),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Category',
+            name='Ingredient',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(max_length=100)),
-                ('type', models.CharField(choices=[('Common', 'Common'), ('Rare', 'Rare'), ('Epic', 'Epic'), ('Legendary', 'Legendary')], max_length=20)),
                 ('description', models.TextField()),
+                ('magic_level', models.CharField(choices=[('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5'), ('6', '6'), ('7', '7'), ('8', '8'), ('9', '9'), ('10', '10')], max_length=2)),
+                ('image', models.CharField(max_length=100)),
+                ('preparation_time', models.CharField(max_length=100)),
                 ('date_created', models.DateTimeField(auto_now_add=True)),
                 ('slug', autoslug.fields.AutoSlugField(editable=False, populate_from='name')),
+                ('category', models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, to='category.category')),
             ],
             options={
-                'verbose_name': 'Category',
-                'verbose_name_plural': 'Categories',
-                'db_table': 'category',
+                'verbose_name': 'Ingredient',
+                'verbose_name_plural': 'Ingredients',
+                'db_table': 'ingredient',
             },
         ),
     ]
