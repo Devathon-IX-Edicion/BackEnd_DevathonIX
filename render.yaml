@@ -1,8 +1,8 @@
 databases:
-  - name: 
+  - name: miproyectodb
     plan: free
-    databaseName: 
-    user: 
+    databaseName: miproyecto
+    user: miproyecto
 
 services:
   - type: web
