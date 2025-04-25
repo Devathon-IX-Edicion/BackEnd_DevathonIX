@@ -144,6 +144,38 @@ python manage.py createsuperuser
 # http://127.0.0.1:8000/admin/
 ```
 
+## Manual de documentación de la API con drf-yasg
+
+### Requisitos
+- Django ≥ 2.2 y Django REST Framework ≥ 3.10  
+- drf-yasg instalado:
+  ```bash
+  pip install drf-yasg
+Esto levantará tu API en http://127.0.0.1:8000/.
+Django REST Framework
+
+Abre tu navegador web favorito
+Puede ser Chrome, Firefox, Safari, Edge, etc.
+
+Visita Swagger UI
+
+ URL: http://127.0.0.1:8000/swagger/
+
+        drf-yasg
+
+    Visita ReDoc
+
+        URL: http://127.0.0.1:8000/redoc/
+
+        Qué verás: documentación alternativa optimizada para lectura, con menú lateral y secciones plegables.
+        drf-yasg
+
+    Consulta el esquema crudo (OpenAPI)
+
+        JSON: http://127.0.0.1:8000/swagger.json
+
+        YAML: http://127.0.0.1:8000/swagger.yaml
+
 ## 🦡 Equipo Hufflepuff
 
 Estamos orgullosos de representar a la casa Hufflepuff en este Devathon. Como auténticos Hufflepuff, hemos puesto nuestro esfuerzo, dedicación y trabajo duro en este proyecto.
